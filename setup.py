@@ -1,6 +1,7 @@
 from setuptools import setup, find_packages
 from typing import List
 
+
 # Declaring variables for setup function
 PROJECT_NAME = "housing-predictor"
 VERSION = "0.0.1"
