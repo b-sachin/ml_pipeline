@@ -12,7 +12,7 @@ os.makedirs(LOG_DIR, exist_ok=True)
 LOG_FILE_PATH = os.path.join(LOG_DIR,LOG_FILE_NAME)
 
 lg.basicConfig(filename = LOG_FILE_PATH,
-               filemode='w',
+               filemode="w",
                format='[%(asctime)s]^;%(levelname)s^;%(lineno)d^;%(filename)s^;%(funcName)s()^- %(message)s',
                level= lg.INFO
                )
