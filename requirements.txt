@@ -2,4 +2,5 @@ Flask
 gunicorn
 pandas
 numpy
+pyYAML
 -e .
