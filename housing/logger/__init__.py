@@ -1,4 +1,4 @@
-import logging as lg
+import logging
 from datetime import datetime
 import os
 
@@ -11,9 +11,9 @@ os.makedirs(LOG_DIR, exist_ok=True)
 
 LOG_FILE_PATH = os.path.join(LOG_DIR,LOG_FILE_NAME)
 
-lg.basicConfig(filename = LOG_FILE_PATH,
+logging.basicConfig(filename = LOG_FILE_PATH,
                filemode="w",
                format='[%(asctime)s]  %(levelname)s  %(lineno)d  %(filename)s  %(funcName)s()  %(message)s',
-               level= lg.INFO
+               level= logging.INFO
                )
 
