@@ -3,4 +3,6 @@ gunicorn
 pandas
 numpy
 pyYAML
+scikit-learn
+sklearn
 -e .

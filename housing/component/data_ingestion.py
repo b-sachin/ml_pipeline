@@ -1,4 +1,3 @@
-
 import sys, os
 from housing.entity.config_entity import DataIngestionConfig
 from housing.entity.artifact_entity import DataIngestionArtifact
@@ -10,7 +9,6 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import StratifiedShuffleSplit
 
-
 class DataIngestion:
 
     def __init__(self, data_ingestion_config: DataIngestionConfig) -> None:
@@ -20,6 +18,15 @@ class DataIngestion:
         except Exception as e:
             raise HousingException(e,sys) from e
 
+    def initiate_data_ingestion(self) -> DataIngestionArtifact:
+        try:
+            tgz_file_path= self.download_housing_data()
+            self.extract_tgz_file(tgz_file_path= tgz_file_path)
+            return self.split_data_as_train_test()
+
+        except Exception as e:
+            raise HousingException(e,sys) from e    
+    
     def download_housing_data(self) -> str:
         try:
             # extract remote url to download dataset
@@ -109,19 +116,9 @@ class DataIngestion:
             logging.info(f"Data Ingestion Artifact: [ {data_ingestion_artifact} ]")
             return data_ingestion_artifact
 
-
         except Exception as e:
             raise HousingException(e,sys) from e
-
-    def initiate_data_ingestion(self) -> DataIngestionArtifact:
-        try:
-            tgz_file_path= self.download_housing_data()
-            self.extract_tgz_file(tgz_file_path= tgz_file_path)
-            return self.split_data_as_train_test()
-
-        except Exception as e:
-            raise HousingException(e,sys) from e
-
 
     def __del__(self):
         logging.info(f"{'='*20}Data Ingestion log Completed. {'='*20} \n\n")
+
