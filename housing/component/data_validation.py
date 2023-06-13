@@ -6,9 +6,17 @@ from housing.constant import DATASET_SCHEMA_COLUMNS, DATASET_SCHEMA_DOMAIN_VALUE
 from housing.util.util import read_yaml_file
 import os, sys
 import pandas as pd
-from evidently.dashboard import Dashboard
-from evidently.dashboard.tabs import DataDriftTab
-from evidently.model_profile.sections import DataDriftProfileSection
+# from evidently.model_profile import Profile
+from evidently.report import Report
+from evidently.metric_preset import DataDriftPreset
+from evidently.metric_preset import TargetDriftPreset
+
+from evidently.test_suite.test_suite import TestSuite
+from evidently.test_preset import NoTargetPerformanceTestPreset
+#from evidently.model_profile.sections import DataDriftProfileSection
+#from evidently.dashboard import Dashboard
+#from evidently.dashboard.tabs import DataDriftTab
+
 
 import json
 
@@ -138,10 +146,16 @@ class DataValidation:
 
     def get_and_save_data_drift_report(self):
         try:
-            profile = Profile(sections=[DataDriftProfileSection()])
+            # profile = Profile(sections=[DataDriftProfileSection()])
+            drift_report = Report(metrics=[DataDriftPreset(), TargetDriftPreset()])
+            
             train_data_frame,test_data_frame = self.get_train_and_test_df()
-            profile.calculate(train_data_frame,test_data_frame)
-            report = json.loads(profile.json())
+            
+            # profile.calculate(train_data_frame,test_data_frame)
+            drift_report.run(reference_data= train_data_frame, current_data=test_data_frame)
+
+            # report = json.loads(profile.json())
+            report = json.loads(drift_report.json())
 
             report_file_path = self.data_validation_config.report_file_path
 
@@ -156,16 +170,25 @@ class DataValidation:
 
     def save_data_drift_report_page(self):
         try:
-            dashboard = Dashboard(tabs = [DataDriftTab()])
+            #dashboard = Dashboard(tabs = [DataDriftTab()])
+            no_target_performance = TestSuite(tests=[NoTargetPerformanceTestPreset(),])
+            
             train_data_frame,test_data_frame = self.get_train_and_test_df()
-            dashboard.calculate(train_data_frame,test_data_frame)
+            
+            #dashboard.calculate(train_data_frame,test_data_frame)
+            no_target_performance.run(reference_data=train_data_frame,current_data=test_data_frame)
+            
+            report = json.loads(no_target_performance.json())
 
             report_page_file_path = self.data_validation_config.report_page_file_path
 
             report_page_dir = os.path.dirname(report_page_file_path)
             os.makedirs(report_page_dir, exist_ok=True)
 
-            dashboard.save(report_page_file_path)
+            # dashboard.save(report_page_file_path)
+            with open(report_page_file_path,"w") as report_file:
+                json.dump(report, report_file, indent = 6)
+
         except Exception as e:
             raise HousingException(e,sys) from e
     
