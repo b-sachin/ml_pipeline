@@ -6,10 +6,10 @@ from housing.constant import DATASET_SCHEMA_COLUMNS, DATASET_SCHEMA_DOMAIN_VALUE
 from housing.util.util import read_yaml_file
 import os, sys
 import pandas as pd
-from evidently.model_profile import Profile
-from evidently.model_profile.sections import DataDriftProfileSection
 from evidently.dashboard import Dashboard
 from evidently.dashboard.tabs import DataDriftTab
+from evidently.model_profile.sections import DataDriftProfileSection
+
 import json
 
 class DataValidation:

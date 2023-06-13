@@ -1,6 +1,8 @@
 import yaml
 from housing.exception import HousingException
 import os,sys
+import pandas as pd
+import numpy as np
 
 def read_yaml_file(file_path:str)->dict:
     """
