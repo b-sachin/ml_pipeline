@@ -100,12 +100,20 @@ class DataValidation:
             logging.info(f"checking the values of 'ocean proximity' column of Schema Dataset with Training and Testing Dataset")
             
             domain_values_match = False
-            domain_value_colums = schema_info[DATASET_SCHEMA_DOMAIN_VALUE]
+            domain_value_columns = schema_info[DATASET_SCHEMA_DOMAIN_VALUE]
             
-            schema_column_domain_values = list(domain_value_colums.values())[0]
+            schema_column_domain_values = list(domain_value_columns.values())[0]
+            
+            train_cat = train_data_frame.loc[:,list(train_data_frame.dtypes == 'object')]
+            train_cat_df = pd.DataFrame(train_cat.value_counts())
+            train_cat_df.reset_index(inplace=True)
+            train_column_domain_values = list(train_cat_df.iloc[:,0])
 
-            train_column_domain_values = list(set(train_data_frame[domain_value_colums]))
-            test_column_domain_values = list(set(test_data_frame[domain_value_colums]))
+
+            test_cat = test_data_frame.loc[:,list(test_data_frame.dtypes == 'object')]
+            test_cat_df = pd.DataFrame(test_cat.value_counts())
+            test_cat_df.reset_index(inplace=True)
+            test_column_domain_values = list(test_cat_df.iloc[:,0])
 
             if (train_column_domain_values.sort() == schema_column_domain_values.sort()) and \
                 (test_column_domain_values.sort() == schema_column_domain_values.sort()):

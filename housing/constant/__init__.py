@@ -40,8 +40,8 @@ DATA_VALIDATION_REPORT_PAGE_FILE_NAME_KEY = "report_page_file_name"
 DATASET_SCHEMA_COLUMNS = "columns"
 DATASET_SCHEMA_TARGET_COLUMN = "target_column"
 DATASET_SCHEMA_DOMAIN_VALUE = "domain_value"
-DATASET_SCHEMA_NUMERICAL_COLUMN = "numerical_column"
-DATASET_SCHEMA_CATEGORICAL_COLUMN = "categorical_column"
+DATASET_SCHEMA_NUMERICAL_COLUMN = "numerical_columns"
+DATASET_SCHEMA_CATEGORICAL_COLUMN = "categorical_columns"
 
 # Data Transformation related variable
 

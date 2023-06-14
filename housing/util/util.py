@@ -3,6 +3,8 @@ from housing.exception import HousingException
 import os,sys
 import pandas as pd
 import numpy as np
+import dill
+from housing.constant import DATASET_SCHEMA_COLUMNS
 
 def read_yaml_file(file_path:str)->dict:
     """
